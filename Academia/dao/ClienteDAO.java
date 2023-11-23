@@ -16,7 +16,7 @@ public class ClienteDAO {
         this.connection = connection;
     }
 
-    public void createCliente(Cliente cliente) {
+    public void criarCliente(Cliente cliente) {
         try {
             String sql = "INSERT INTO cliente (nome, cpf, telefone, plano) VALUES (?, ?, ?, ?)";
 
@@ -33,7 +33,7 @@ public class ClienteDAO {
         }
     }
 
-    public ArrayList<Cliente> retrieveAllClientes() {
+    public ArrayList<Cliente> recuperarClientes() {
         ArrayList<Cliente> clientes = new ArrayList<>();
 
         try {

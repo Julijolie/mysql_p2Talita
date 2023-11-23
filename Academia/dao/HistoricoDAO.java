@@ -17,7 +17,7 @@ public class HistoricoDAO {
         this.connection = connection;
     }
 
-    public void createHistorico(Historico historico) {
+    public void criarHistorico(Historico historico) {
         try {
             String sql = "INSERT INTO historico (id, data, descricao, fk_cliente) VALUES (?, ?, ?, ?)";
 
@@ -34,7 +34,7 @@ public class HistoricoDAO {
         }
     }
 
-    public ArrayList<Historico> retrieveAllHistoricos() {
+    public ArrayList<Historico> recuperarHistoricos() {
         ArrayList<Historico> historicos = new ArrayList<>();
 
         try {

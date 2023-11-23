@@ -32,12 +32,12 @@ public class Principal {
 
 
             ClienteDAO clienteDAO = new ClienteDAO(connection);
-            clienteDAO.createCliente(cliente1);
-            clienteDAO.createCliente(cliente2);
+            clienteDAO.criarCliente(cliente1);
+            clienteDAO.criarCliente(cliente2);
 
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO(connection);
-            funcionarioDAO.createFuncionario(funcionario1);
-            funcionarioDAO.createFuncionario(funcionario2);
+            funcionarioDAO.criarFuncionario(funcionario1);
+            funcionarioDAO.criarFuncionario(funcionario2);
 
             AulaDAO aulaDAO = new AulaDAO(connection);
 
@@ -45,18 +45,18 @@ public class Principal {
             aulaDAO.createAula(aula2);
 
             HistoricoDAO historicoDAO = new HistoricoDAO(connection);
-            historicoDAO.createHistorico(historico1);
-            historicoDAO.createHistorico(historico2);
+            historicoDAO.criarHistorico(historico1);
+            historicoDAO.criarHistorico(historico2);
 
 
 
-            ArrayList<Cliente> clientes = clienteDAO.retrieveAllClientes();
+            ArrayList<Cliente> clientes = clienteDAO.recuperarClientes();
             System.out.println("Clientes:");
             for (Cliente cliente : clientes) {
                 System.out.println(cliente);
             }
 
-            ArrayList<Funcionario> funcionarios = funcionarioDAO.retrieveAllFuncionarios();
+            ArrayList<Funcionario> funcionarios = funcionarioDAO.recuperarFuncionarios();
             System.out.println("\nFuncionários:");
             for (Funcionario funcionario : funcionarios) {
                 System.out.println(funcionario);
@@ -69,7 +69,7 @@ public class Principal {
                 System.out.println(aula);
             }
 
-            ArrayList<Historico> historicos = historicoDAO.retrieveAllHistoricos();
+            ArrayList<Historico> historicos = historicoDAO.recuperarHistoricos();
 
             System.out.println("Historicos:");
             for (Historico historico : historicos) {

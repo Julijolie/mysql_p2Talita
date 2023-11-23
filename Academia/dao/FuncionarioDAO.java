@@ -16,7 +16,7 @@ public class FuncionarioDAO {
         this.connection = connection;
     }
 
-    public void createFuncionario(Funcionario funcionario) {
+    public void criarFuncionario(Funcionario funcionario) {
         try {
             String sql = "INSERT INTO funcionario (id_pessoa, cargo, nome, cpf) VALUES (?, ?, ?, ?)";
 
@@ -33,7 +33,7 @@ public class FuncionarioDAO {
         }
     }
 
-    public ArrayList<Funcionario> retrieveAllFuncionarios() {
+    public ArrayList<Funcionario> recuperarFuncionarios() {
         ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
         try {
