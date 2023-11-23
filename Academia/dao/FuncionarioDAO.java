@@ -59,8 +59,9 @@ public class FuncionarioDAO {
             throw new RuntimeException(e);
         }
     }
+
     public void deletarFuncionario(String idFuncionario) {
-        String sql = "DELETE FROM funcionario WHERE id_pessoa = 2";
+        String sql = "DELETE FROM funcionario WHERE id_pessoa = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, idFuncionario);
@@ -76,4 +77,43 @@ public class FuncionarioDAO {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<Funcionario> recuperarFuncionariosComAulas() {
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+
+        try {
+            String sql = "SELECT f.id_pessoa, f.cargo, f.nome, f.cpf, f.telefone, a.id_exercicio, a.modalidade, a.turno "
+                       + "FROM funcionario AS f "
+                       + "LEFT JOIN aulas AS a ON f.id_pessoa = a.funcionario_id_pessoa";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+                pstm.execute();
+                ResultSet rst = pstm.getResultSet();
+
+                while (rst.next()) {
+                    int idPessoa = rst.getString("id_pessoa");
+                    String cargo = rst.getString("cargo");
+                    String nome = rst.getString("nome");
+                    String cpf = rst.getString("cpf");
+                    String telefone = rst.getString("telefone");
+                    String idExercicio = rst.getString("id_exercicio");
+                    String modalidade = rst.getString("modalidade");
+                    String turno = rst.getString("turno");
+
+                    Funcionario funcionario = new Funcionario(idPessoa, cargo, nome, cpf, telefone);
+                    // Adiciona informações da aula, se disponíveis
+                    if (idExercicio != null) {
+                        // Aqui você pode decidir como lidar com as informações da aula (criar uma classe Aula, por exemplo)
+                        // Por enquanto, estou apenas imprimindo para ilustrar.
+                        System.out.println("Informações da aula - ID: " + idExercicio + ", Modalidade: " + modalidade + ", Turno: " + turno);
+                    }
+                    funcionarios.add(funcionario);
+                }
+            }
+            return funcionarios;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
