@@ -2,12 +2,15 @@ import dao.AulaDAO;
 import dao.ClienteDAO;
 import dao.ConnectionFactory;
 import dao.FuncionarioDAO;
+import dao.HistoricoDAO;
 import modelo.Aula;
 import modelo.Cliente;
 import modelo.Funcionario;
+import modelo.Historico;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Principal {
@@ -24,6 +27,9 @@ public class Principal {
             Aula aula1 = new Aula("1", "Musculação", "Manhã", "1001");
             Aula aula2 = new Aula("2", "Yoga", "Tarde", "1001");
 
+            Historico historico1 = new Historico(1, LocalDate.of(2023, 11, 10), "Historico 1", 1);
+            Historico historico2 = new Historico(2, LocalDate.of(2023, 11, 15), "Historico 2", 2);
+
 
             ClienteDAO clienteDAO = new ClienteDAO(connection);
             clienteDAO.createCliente(cliente1);
@@ -37,6 +43,10 @@ public class Principal {
 
             aulaDAO.createAula(aula1);
             aulaDAO.createAula(aula2);
+
+            HistoricoDAO historicoDAO = new HistoricoDAO(connection);
+            historicoDAO.createHistorico(historico1);
+            historicoDAO.createHistorico(historico2);
 
 
 
@@ -57,6 +67,13 @@ public class Principal {
             System.out.println("Aulas:");
             for (Aula aula : aulas) {
                 System.out.println(aula);
+            }
+
+            ArrayList<Historico> historicos = historicoDAO.retrieveAllHistoricos();
+
+            System.out.println("Historicos:");
+            for (Historico historico : historicos) {
+                System.out.println(historico);
             }
 
         } catch (SQLException e) {
