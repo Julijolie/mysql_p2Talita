@@ -59,4 +59,21 @@ public class FuncionarioDAO {
             throw new RuntimeException(e);
         }
     }
+    public void deletarFuncionario(String idFuncionario) {
+        String sql = "DELETE FROM funcionario WHERE id_pessoa = 2";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, idFuncionario);
+
+            int linhasAfetadas = pstmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                System.out.println("Funcionário deletado com sucesso!");
+            } else {
+                System.out.println("Nenhum funcionário foi deletado. Verifique o ID do funcionário.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

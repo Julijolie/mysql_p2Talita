@@ -59,4 +59,40 @@ public class ClienteDAO {
             throw new RuntimeException(e);
         }
     }
+    //Juliana - estou com problema pra rodas o código, teste td, por favor
+   public ArrayList<Cliente> recuperaAula() {
+    ArrayList<Cliente> clientes = new ArrayList<>();
+    Cliente ultima = null;
+
+    // JUNÇÃO DE TABELAS---> RELAÇÃO N:M (CLIENTE - AULA)
+    try {
+        String sql = "SELECT c.id_cliente, c.plano, c.nome, c.cpf, c.telefone, a.id_exercicio, a.modalidade, a.turno "
+                + "FROM cliente AS c "
+                + "LEFT JOIN aula_cliente AS ac ON c.id_cliente = ac.fk_cliente "
+                + "LEFT JOIN aulas AS a ON a.id_exercicio = ac.fk_aula";
+
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.execute();
+
+            try (ResultSet rst = pstm.getResultSet()) {
+                while (rst.next()) {
+                    // para garantir que apenas novos clientes ou clientes com IDs diferentes sejam processados.
+                    if (ultima == null || ultima.getIdCliente() != rst.getInt("id_cliente")) {
+                        int idCliente = rst.getInt("id_cliente");
+                        String plano = rst.getString("plano");
+                        String nome = rst.getString("nome");
+                        String cpf = rst.getString("cpf");
+                        String telefone = rst.getString("telefone");
+                        Cliente cliente = new Cliente(idCliente, nome, cpf, telefone, plano);
+                        clientes.add(cliente);
+                        ultima = cliente;
+                    }
+                }
+            }
+        }
+        return clientes;
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+}
 }
